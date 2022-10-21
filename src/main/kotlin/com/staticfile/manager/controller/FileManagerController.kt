@@ -1,6 +1,8 @@
 package com.staticfile.manager.controller
 
 import com.staticfile.manager.service.FileManagerService
+import com.staticfile.manager.util.HTML
+import com.staticfile.manager.util.JSON
 import com.staticfile.manager.util.LOCATION
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -15,21 +17,20 @@ class FileManagerController(private val fileManagerService: FileManagerService) 
 
     private val logger = LoggerFactory.getLogger(FileManagerController::class.java)
 
-    @GetMapping("**/{.:.+?\\..+}")
-    fun getPage(request: HttpServletRequest): ResponseEntity<String> {
-        logger.info("Request for get page; endpoint: {}", request.servletPath)
-        return ResponseEntity(fileManagerService.getDocumentByPath(request.servletPath), HttpStatus.OK)
-    }
-
-    @GetMapping("**/{.:\\w+}")
-    fun redirect(request: HttpServletRequest): ResponseEntity<String> {
-        val newPath = fileManagerService.getRedirectPath(request.servletPath)
-        logger.info(
-                "Request for redirect; original endpoint: {}; redirect endpoint: {}",
+    @GetMapping("**")
+    fun getPageOrRedirect(request: HttpServletRequest): ResponseEntity<String> {
+        return if (request.servletPath.endsWith(HTML) || request.servletPath.endsWith(JSON)) {
+            logger.info("Request for get page; endpoint: {}", request.servletPath)
+            ResponseEntity(fileManagerService.getDocumentByPath(request.servletPath), HttpStatus.OK)
+        } else {
+            val newPath = fileManagerService.getRedirectPath(request.servletPath)
+            logger.info(
+                "Request for redirect; original endpoint: {}; redirect endpoint {}",
                 request.servletPath,
                 newPath
-        )
-        return ResponseEntity(redirectHeader(request.contextPath + newPath), HttpStatus.FOUND)
+            )
+            ResponseEntity(redirectHeader(request.contextPath + newPath), HttpStatus.FOUND)
+        }
     }
 
     private fun redirectHeader(path: String): HttpHeaders {

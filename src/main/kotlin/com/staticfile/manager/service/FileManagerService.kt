@@ -11,7 +11,7 @@ class FileManagerService(private val adapter: StorageAdapter) {
     }
 
     fun getRedirectPath(originPath: String): String {
-        return "/nikita.html"
+        return adapter.referenceToAbsolutePath(originPath)
     }
 
 }
