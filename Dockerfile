@@ -1,7 +1,9 @@
-FROM docker.io/minio/minio:latest
+FROM maven:3.8.4-eclipse-temurin-17
 
-COPY --from=docker.io/minio/mc:latest /usr/bin/mc /usr/bin/mc
-RUN mkdir /buckets
-RUN minio server /buckets &
+WORKDIR /app
 
-CMD ["minio", "server", "/buckets", "--address", ":9000", "--console-address", ":9001"]
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+
+CMD ["mvn", "spring-boot:run"]

@@ -15,6 +15,7 @@ class MinioAdapter(private val minioClient: MinioClient) : StorageAdapter {
     private val bucket: String? = null
 
     override fun getDocumentByPath(path: String): String {
+
         return try {
             val objectArgs = GetObjectArgs.builder().bucket(bucket).`object`(path).build()
             val result = minioClient.getObject(objectArgs).readBytes()
