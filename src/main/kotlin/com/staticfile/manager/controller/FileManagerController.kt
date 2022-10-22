@@ -14,28 +14,11 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 class FileManagerController(private val fileManagerService: FileManagerService) {
-
     private val logger = LoggerFactory.getLogger(FileManagerController::class.java)
 
     @GetMapping("**")
     fun getPageOrRedirect(request: HttpServletRequest): ResponseEntity<String> {
-        return if (request.servletPath.endsWith(HTML) || request.servletPath.endsWith(JSON)) {
-            logger.info("Request for get page; endpoint: {}", request.servletPath)
-            ResponseEntity(fileManagerService.getDocumentByPath(request.servletPath), HttpStatus.OK)
-        } else {
-            val newPath = fileManagerService.getRedirectPath(request.servletPath)
-            logger.info(
-                "Request for redirect; original endpoint: {}; redirect endpoint {}",
-                request.servletPath,
-                newPath
-            )
-            ResponseEntity(redirectHeader(request.contextPath + newPath), HttpStatus.FOUND)
-        }
-    }
-
-    private fun redirectHeader(path: String): HttpHeaders {
-        val headers = HttpHeaders()
-        headers.add(LOCATION, path)
-        return headers
+        logger.info("Get request to : {}", request.requestURL)
+        return fileManagerService.getPageOrRedirect(request)
     }
 }

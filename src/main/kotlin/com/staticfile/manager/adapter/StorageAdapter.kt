@@ -1,6 +1,7 @@
 package com.staticfile.manager.adapter
 
+import com.staticfile.manager.dto.PageData
+
 interface StorageAdapter {
-    fun getDocumentByPath(path: String): String
-    fun referenceToAbsolutePath(referencePath: String): String
+    fun getDocumentOrAbsolutePath(path: String): PageData
 }

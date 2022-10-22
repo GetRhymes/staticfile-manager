@@ -1,4 +1,8 @@
-package com.staticfile.manager.util
+package com.staticfile.manager.dto
+
+import com.staticfile.manager.util.ACTUAL_NODE
+import com.staticfile.manager.util.CURRENT_NODE
+import com.staticfile.manager.util.WELCOME_PAGE
 
 data class MetaData(
     val currentNode: String,

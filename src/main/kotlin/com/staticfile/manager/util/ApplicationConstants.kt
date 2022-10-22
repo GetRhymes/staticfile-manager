@@ -7,6 +7,7 @@ const val STORAGE_PORT = "storage.port"
 const val STORAGE_ACCESS_KEY = "storage.access-key"
 const val STORAGE_PRIVATE_KEY = "storage.private-key"
 const val STORAGE_BUCKET = "storage.bucket"
+const val STORAGE_TEMP_DIR = "storage.temp-dir"
 
 //HTTP constants
 const val LOCATION = "Location"
@@ -19,9 +20,6 @@ const val WELCOME_PAGE = "welcome-page"
 
 //Page constants
 const val NOT_FOUND_PAGE = "/not-found.html"
-
-//Separators constants
-const val PATH_SEPARATOR = "/"
 
 //File extension constants
 const val JSON = ".json"

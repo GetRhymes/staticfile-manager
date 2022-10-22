@@ -1,0 +1,9 @@
+#Storage config
+storage:
+  .protocol: http
+  .host: localhost
+  .port: 9002
+  .access-key: minioadmin
+  .private-key: minioadmin
+  .bucket: help
+  .temp-dir: /tmp/s3

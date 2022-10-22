@@ -1,0 +1,8 @@
+#Storage config
+storage:
+  .protocol: http
+  .host: localhost
+  .port: 9000
+  .access-key: minioadmin
+  .private-key: minioadmin
+  .bucket: help

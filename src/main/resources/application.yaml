@@ -1,0 +1,5 @@
+#Spring config
+server.servlet.context-path: /help
+spring:
+  .mvc.pathmatch.matching-strategy: ANT_PATH_MATCHER
+  .profiles.active: dev

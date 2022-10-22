@@ -1,18 +1,17 @@
 package com.staticfile.manager.adapter.impl
 
+import com.amazonaws.AmazonServiceException
+import com.amazonaws.services.s3.AmazonS3
 import com.staticfile.manager.adapter.StorageAdapter
 import com.staticfile.manager.dto.MetaData
 import com.staticfile.manager.dto.PageData
 import com.staticfile.manager.dto.Type
 import com.staticfile.manager.util.*
-import io.minio.GetObjectArgs
-import io.minio.MinioClient
-import io.minio.errors.ErrorResponseException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class MinioAdapter(private val minioClient: MinioClient) : StorageAdapter {
+class AmazonS3Adapter(private val amazonS3Client: AmazonS3) : StorageAdapter {
 
     @Value("\${$STORAGE_BUCKET}")
     private val bucket: String? = null
@@ -27,23 +26,19 @@ class MinioAdapter(private val minioClient: MinioClient) : StorageAdapter {
 
     private fun getDocumentByPath(path: String): PageData {
         return try {
-            val objectArgs = GetObjectArgs.builder().bucket(bucket).`object`(path).build()
-            val result = minioClient.getObject(objectArgs).readBytes()
+            val result = amazonS3Client.getObject(bucket, path).objectContent.readBytes()
             return PageData(path, Type.OK, String(result))
-        } catch (e: ErrorResponseException) {
+        } catch (e: AmazonServiceException) {
             getNotFoundPage()
         }
     }
 
-    private fun getAbsolutePath(path: String): PageData {
-        val request = GetObjectArgs
-            .builder()
-            .bucket(bucket)
-            .`object`("$path$META_INF_NAME")
-            .build()
-
+    private fun getAbsolutePath(referencePath: String): PageData {
         return try {
-            val bytesMetaData = minioClient.getObject(request).readBytes()
+            val bytesMetaData = amazonS3Client
+                .getObject(bucket,"$referencePath$META_INF_NAME")
+                .objectContent
+                .readBytes()
             val metaData = MetaData.getInstance(bytesMetaData)
             when {
                 metaData.welcomePage != null -> {
@@ -54,14 +49,13 @@ class MinioAdapter(private val minioClient: MinioClient) : StorageAdapter {
                 }
                 else -> getNotFoundPage()
             }
-        } catch (e: ErrorResponseException) {
+        } catch (e: AmazonServiceException) {
             getNotFoundPage()
         }
     }
 
     private fun getNotFoundPage(): PageData {
-        val objectArgs = GetObjectArgs.builder().bucket(bucket).`object`(NOT_FOUND_PAGE).build()
-        val result = minioClient.getObject(objectArgs).readBytes()
-        return PageData(NOT_FOUND_PAGE, Type.NOT_FOUND, String(result))
+        val notFoundPageBytes = amazonS3Client.getObject(bucket, NOT_FOUND_PAGE).objectContent.readBytes()
+        return PageData(NOT_FOUND_PAGE, Type.NOT_FOUND, String(notFoundPageBytes))
     }
 }
