@@ -125,5 +125,7 @@ http://localhost:8080/help/kotlin/features/feature2.html → http://localhost:80
 **Case 5**. Некорректный запрос
 
 http://localhost:8080/help/kotlin/sdk → 404 not-found
+
 http://localhost:8080/help/0.0.1 → 404 not-found
+
 http://localhost:8080/help/feature1.html → 404 not-found
