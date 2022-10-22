@@ -60,6 +60,12 @@ class TestWorkflow {
         }
     }
 
+    @AfterAll
+    fun shutdown() {
+        s3ServerMock!!.shutdown()
+        File(tempDir.toString()).deleteRecursively()
+    }
+
     @Test
     fun testRedirectToRootWelcomePage() {
         assertThat(
@@ -126,13 +132,6 @@ class TestWorkflow {
                 )
                 .andExpect(status().isNotFound)
         )
-    }
-
-
-    @AfterAll
-    fun shutdown() {
-        s3ServerMock!!.shutdown()
-        File(tempDir.toString()).deleteRecursively()
     }
 
     private fun collectListFiles(directory: File, listFiles: MutableList<String>): MutableList<String> {
