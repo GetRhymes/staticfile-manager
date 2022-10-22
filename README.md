@@ -38,16 +38,23 @@ current-node: '/'
 IMAGE
 
 Для развертывания программы используется Docker. В проекте есть 2 Dockerfile:
+
 1. backend
 2. minio
 
-Dockerfile для backend копирует исходники и pom.xml на основе образа maven + java17 проекта собирается и запускается, с помощью команды spring-boot:run (spring-boot имеет встроенный Tomcat)
+Dockerfile для backend копирует исходники и pom.xml на основе образа maven + java17 проекта собирается и запускается, с
+помощью команды spring-boot:run (spring-boot имеет встроенный Tomcat)
 
-Dockerfile для minio устанавливает образ хранилища, создает необходимую директорию (бакет) и в нее копируется заранее подготовленный dataset (находится в проекте в директории minio)
+Dockerfile для minio устанавливает образ хранилища, создает необходимую директорию (бакет) и в нее копируется заранее
+подготовленный dataset (находится в проекте в директории minio)
 
-Для управления вышеописанными контейнера используется docker-compose. 
+Для управления вышеописанными контейнера используется docker-compose.
+
+ВАЖНО: перед запуском контейнеров убедитесь, что указан верный активный профиль (spring.profile.active: prod) в файле
+src/main/resources/application.yaml
 
 Сборка и деплой:
+
 ```
 1. git clone https://github.com/GetRhymes/staticfile-manager.git
 2. cd staticfile-manager
@@ -55,6 +62,7 @@ Dockerfile для minio устанавливает образ хранилища
 ```
 
 Структура хранилища:
+
 ```
   /help
     |- welcome.html
