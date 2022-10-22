@@ -107,19 +107,25 @@ http://localhost:8080/help → http://localhost:8080/help/welcome.html
 **Case 2**. Документация IDEA
 
 http://localhost:8080/help/idea → http://localhost:8080/help/idea/0.0.2/getting-started.html
+
 http://localhost:8080/help/idea/0.0.1 → http://localhost:8080/help/idea/0.0.1/getting-started.html
+
 http://localhost:8080/help/idea/0.0.1/feature1.html → http://localhost:8080/help/idea/0.0.1/feature1.html
 
 **Case 3**. Документация инструментов
 
 http://localhost:8080/help/tools → http://localhost:8080/help/tools/welcome.html
+
 http://localhost:8080/help/tools/welcome.json → http://localhost:8080/help/tools/welcome.json
 
 **Case 4**. Документация Kotlin
 
 http://localhost:8080/help/kotlin → http://localhost:8080/help/kotlin/welcome.html
+
 http://localhost:8080/help/kotlin/features → http://localhost:8080/help/kotlin/features/feature1.html
+
 http://localhost:8080/help/kotlin/features/feature1.html → http://localhost:8080/help/kotlin/features/feature1.html
+
 http://localhost:8080/help/kotlin/features/feature2.html → http://localhost:8080/help/kotlin/features/feature2.html
 
 **Case 5**. Некорректный запрос
