@@ -17,7 +17,7 @@ class AmazonS3Adapter(private val amazonS3Client: AmazonS3) : StorageAdapter {
     private val bucket: String? = null
 
     override fun getDocumentOrAbsolutePath(path: String): PageData {
-        return if (path.endsWith(HTML) || path.endsWith(JSON)) {
+        return if (path.isFileName()) {
             getDocumentByPath(path)
         } else {
             getAbsolutePath(path)

@@ -18,7 +18,7 @@ class MinioAdapter(private val minioClient: MinioClient) : StorageAdapter {
     private val bucket: String? = null
 
     override fun getDocumentOrAbsolutePath(path: String): PageData {
-        return if (path.endsWith(HTML) || path.endsWith(JSON)) {
+        return if (path.isFileName()) {
             getDocumentByPath(path)
         } else {
             getAbsolutePath(path)

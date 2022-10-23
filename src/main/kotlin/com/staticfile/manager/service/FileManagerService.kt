@@ -2,13 +2,9 @@ package com.staticfile.manager.service
 
 import com.staticfile.manager.adapter.StorageAdapter
 import com.staticfile.manager.dto.Type
-import com.staticfile.manager.util.HTML
-import com.staticfile.manager.util.JSON
 import com.staticfile.manager.util.LOCATION
-import com.staticfile.manager.util.NOT_FOUND_PAGE
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
