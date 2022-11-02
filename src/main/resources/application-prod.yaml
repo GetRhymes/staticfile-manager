@@ -1,7 +1,7 @@
 #Storage config
 storage:
   .protocol: http
-  .host: 172.18.0.2
+  .host: minio-storage
   .port: 9000
   .access-key: minioadmin
   .private-key: minioadmin
